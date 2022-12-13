@@ -26,7 +26,7 @@ my $t = Test::Nginx->new()->has(qw/http rewrite gzip/)->plan(19)
 	->write_file_expand('nginx.conf', <<'EOF');
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {
@@ -43,6 +43,7 @@ http {
     log_format default  escape=default  $uri$arg_b$arg_c;
     log_format none     escape=none     $uri$arg_b$arg_c;
     log_format json     escape=json     $uri$arg_b$arg_c;
+    error_log /appgwroot/log/nginx/error.log debug;
 
     server {
         listen       127.0.0.1:8080;
