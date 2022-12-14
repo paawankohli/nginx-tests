@@ -27,7 +27,7 @@ my $t = Test::Nginx->new()->has(qw/http autoindex symlink/)->plan(37)
 	->write_file_expand('nginx.conf', <<'EOF');
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {
