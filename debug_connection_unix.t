@@ -26,7 +26,7 @@ my $t = Test::Nginx->new()->has(qw/http --with-debug unix proxy/);
 $t->write_file_expand('nginx.conf', <<'EOF');
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {
@@ -65,8 +65,8 @@ is($t->read_file('debug2.log'), '', 'no debug_connection file 2');
 http_get('/debug');
 
 select undef, undef, undef, 0.1;
-like($t->read_file('debug1.log'), qr/\[debug\]/, 'debug_connection file 1');
-like($t->read_file('debug2.log'), qr/\[debug\]/, 'debug_connection file 2');
+like($t->read_file('debug1.log'), qr/\"errorLevel\": \"debug\"/, 'debug_connection file 1');
+like($t->read_file('debug2.log'), qr/\"errorLevel\": \"debug\"/, 'debug_connection file 2');
 is($t->read_file('debug1.log'), $t->read_file('debug2.log'),
 	'debug_connection file1 file2 match');
 
