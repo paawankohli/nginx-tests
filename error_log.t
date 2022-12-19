@@ -28,7 +28,7 @@ my $t = Test::Nginx->new()->has(qw/http limit_req/)
 	->plan(25)->write_file_expand('nginx.conf', <<'EOF');
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {
@@ -127,55 +127,55 @@ SKIP: {
 skip "no --with-debug", 3 unless $t->has_module('--with-debug');
 
 http_get('/debug');
-isnt(lines($t, 'e_debug_debug.log', '[debug]'), 0, 'file debug debug');
-is(lines($t, 'e_debug_info.log', '[debug]'), 0, 'file debug info');
-isnt(lines($t, 'stderr', '[debug]'), 0, 'stderr debug');
+isnt(lines($t, 'e_debug_debug.log', '"errorLevel": "debug"'), 0, 'file debug debug');
+is(lines($t, 'e_debug_info.log', '"errorLevel": "debug"'), 0, 'file debug info');
+isnt(lines($t, 'stderr', '"errorLevel": "debug"'), 0, 'stderr debug');
 
 }
 
 http_get('/info');
-is(lines($t, 'e_info_debug.log', '[info]'), 1, 'file info debug');
-is(lines($t, 'e_info_info.log', '[info]'), 1, 'file info info');
-is(lines($t, 'e_info_notice.log', '[info]'), 0, 'file info notice');
-is(lines($t, 'stderr', '[info]'), 1, 'stderr info');
+is(lines($t, 'e_info_debug.log', '"errorLevel": "info"'), 1, 'file info debug');
+is(lines($t, 'e_info_info.log', '"errorLevel": "info"'), 1, 'file info info');
+is(lines($t, 'e_info_notice.log', '"errorLevel": "info"'), 0, 'file info notice');
+is(lines($t, 'stderr', '"errorLevel": "info"'), 1, 'stderr info');
 
 http_get('/notice');
-is(lines($t, 'e_notice_info.log', '[notice]'), 1, 'file notice info');
-is(lines($t, 'e_notice_notice.log', '[notice]'), 1, 'file notice notice');
-is(lines($t, 'e_notice_warn.log', '[notice]'), 0, 'file notice warn');
-is(lines($t, 'stderr', '[notice]'), 1, 'stderr notice');
+is(lines($t, 'e_notice_info.log', '"errorLevel": "notice"'), 1, 'file notice info');
+is(lines($t, 'e_notice_notice.log', '"errorLevel": "notice"'), 1, 'file notice notice');
+is(lines($t, 'e_notice_warn.log', '"errorLevel": "notice"'), 0, 'file notice warn');
+is(lines($t, 'stderr', '"errorLevel": "notice"'), 1, 'stderr notice');
 
 http_get('/warn');
-is(lines($t, 'e_warn_notice.log', '[warn]'), 1, 'file warn notice');
-is(lines($t, 'e_warn_warn.log', '[warn]'), 1, 'file warn warn');
-is(lines($t, 'e_warn_error.log', '[warn]'), 0, 'file warn error');
-is(lines($t, 'stderr', '[warn]'), 1, 'stderr warn');
+is(lines($t, 'e_warn_notice.log', '"errorLevel": "warn"'), 1, 'file warn notice');
+is(lines($t, 'e_warn_warn.log', '"errorLevel": "warn"'), 1, 'file warn warn');
+is(lines($t, 'e_warn_error.log', '"errorLevel": "warn"'), 0, 'file warn error');
+is(lines($t, 'stderr', '"errorLevel": "warn"'), 1, 'stderr warn');
 
 http_get('/error');
-is(lines($t, 'e_error_warn.log', '[error]'), 1, 'file error warn');
-is(lines($t, 'e_error_error.log', '[error]'), 1, 'file error error');
-is(lines($t, 'e_error_alert.log', '[error]'), 0, 'file error alert');
-is(lines($t, 'stderr', '[error]'), 1, 'stderr error');
+is(lines($t, 'e_error_warn.log', '"errorLevel": "error"'), 1, 'file error warn');
+is(lines($t, 'e_error_error.log', '"errorLevel": "error"'), 1, 'file error error');
+is(lines($t, 'e_error_alert.log', '"errorLevel": "error"'), 0, 'file error alert');
+is(lines($t, 'stderr', '"errorLevel": "error"'), 1, 'stderr error');
 
 # count log messages emitted with various error_log levels
 
 http_get('/file_low');
-is(lines($t, 'e_multi_low.log', '[error]'), 2, 'file low');
+is(lines($t, 'e_multi_low.log', '"errorLevel": "error"'), 2, 'file low');
 
 http_get('/file_dup');
-is(lines($t, 'e_multi.log', '[error]'), 2, 'file dup');
+is(lines($t, 'e_multi.log', '"errorLevel": "error"'), 2, 'file dup');
 
 http_get('/file_high');
-is(lines($t, 'e_multi_high.log', '[error]'), 1, 'file high');
+is(lines($t, 'e_multi_high.log', '"errorLevel": "error"'), 1, 'file high');
 
 http_get('/stderr_low');
-is(lines($t, 'stderr', '[error]'), 2, 'stderr low');
+is(lines($t, 'stderr', '"errorLevel": "error"'), 2, 'stderr low');
 
 http_get('/stderr_dup');
-is(lines($t, 'stderr', '[error]'), 2, 'stderr dup');
+is(lines($t, 'stderr', '"errorLevel": "error"'), 2, 'stderr dup');
 
 http_get('/stderr_high');
-is(lines($t, 'stderr', '[error]'), 1, 'stderr high');
+is(lines($t, 'stderr', '"errorLevel": "error"'), 1, 'stderr high');
 
 ###############################################################################
 
