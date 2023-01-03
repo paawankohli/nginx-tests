@@ -28,7 +28,7 @@ my $t = Test::Nginx->new()->has(qw/http/)->plan(14)
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 
