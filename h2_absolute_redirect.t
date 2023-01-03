@@ -29,7 +29,7 @@ my $t = Test::Nginx->new()->has(qw/http http_v2 proxy rewrite/)
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 
