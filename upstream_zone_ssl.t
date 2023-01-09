@@ -29,7 +29,7 @@ my $t = Test::Nginx->new()->has(qw/http proxy http_ssl upstream_zone/)
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 
