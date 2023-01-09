@@ -252,7 +252,8 @@ sub has_version($) {
 	$self->{_configure_args} = `$NGINX -V 2>&1`
 		if !defined $self->{_configure_args};
 
-	$self->{_configure_args} =~ m!nginx version: Microsoft-Azure-Application-Gateway/v2/([0-9.]+)!;
+	$self->{_configure_args} =~ m!^nginx version: .*?/([0-9.]+)!;
+	# $self->{_configure_args} =~ m!nginx version: Microsoft-Azure-Application-Gateway/v2/([0-9.]+)!;
 	
 	my @v = split(/\./, $1);
 	my ($n, $v);
