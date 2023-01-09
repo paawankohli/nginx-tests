@@ -98,14 +98,14 @@ stream('127.0.0.1:' . port(8080))->io('data');
 SKIP: {
 skip "no --with-debug", 1 unless $t->has_module('--with-debug');
 
-isnt(lines($t, 'e_debug.log', '[debug]'), 0, 'file debug in debug');
+isnt(lines($t, 'e_debug.log', '"errorLevel": "debug"'), 0, 'file debug in debug');
 
 }
 
-isnt(lines($t, 'e_info.log', '[info]'), 0, 'file info in info');
-is(lines($t, 'e_info.log', '[debug]'), 0, 'file debug in info');
-isnt(lines($t, 'stderr', '[info]'), 0, 'stderr info in info');
-is(lines($t, 'stderr', '[debug]'), 0, 'stderr debug in info');
+isnt(lines($t, 'e_info.log', '"errorLevel": "info"'), 0, 'file info in info');
+is(lines($t, 'e_info.log', '"errorLevel": "debug"'), 0, 'file debug in info');
+isnt(lines($t, 'stderr', '"errorLevel": "info"'), 0, 'stderr info in info');
+is(lines($t, 'stderr', '"errorLevel": "debug"'), 0, 'stderr debug in info');
 
 # multiple error_log
 
