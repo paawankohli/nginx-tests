@@ -26,7 +26,7 @@ my $t = Test::Nginx->new();
 $t->write_file_expand('nginx.conf', <<'EOF')->has(qw/http proxy ssi/)->plan(9);
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {
