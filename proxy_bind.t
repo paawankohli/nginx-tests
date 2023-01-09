@@ -32,7 +32,7 @@ my $t = Test::Nginx->new()->has(qw/http proxy/)->plan(5)
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 

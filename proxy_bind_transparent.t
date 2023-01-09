@@ -33,7 +33,7 @@ my $t = Test::Nginx->new()->has(qw/http proxy/)
 %%TEST_GLOBALS%%
 
 daemon off;
-user root wheel;
+user root;
 
 events {
 }
