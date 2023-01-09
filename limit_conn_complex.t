@@ -30,7 +30,7 @@ my $t = Test::Nginx->new()->has(qw/http proxy limit_conn limit_req/)
 $t->write_file_expand('nginx.conf', <<'EOF');
 
 %%TEST_GLOBALS%%
-
+user root;
 daemon off;
 
 events {

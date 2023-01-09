@@ -28,7 +28,7 @@ $t->write_file_expand('nginx.conf', <<'EOF')->plan(8);
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 
@@ -106,7 +106,7 @@ $s = http_get('/custom/w', start => 1);
 like(http_get('/custom'), qr/^HTTP\/1.. 501 /, 'limit_conn_status');
 
 like($t->read_file('error.log'),
-	qr/\[info\].*limiting connections by zone "custom"/,
+    qr/\"errorLevel\": \"info\".*\"errorMessage\": \"limiting connections by zone \\\"custom\\\"/, 
 	'limit_conn_log_level');
 
 # limited after unlimited
