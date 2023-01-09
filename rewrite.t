@@ -27,7 +27,7 @@ my $t = Test::Nginx->new()->has(qw/http rewrite proxy/)->plan(23)
 %%TEST_GLOBALS%%
 
 daemon off;
-
+user root;
 events {
 }
 
