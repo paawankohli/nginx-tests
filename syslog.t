@@ -189,7 +189,7 @@ SKIP: {
 
 skip "no --with-debug", 1 unless $t->has_module('--with-debug');
 
-isnt(syslog_lines('/debug', '[debug]'), 0, 'debug');
+isnt(syslog_lines('/debug', '"errorLevel": "debug"'), 0, 'debug');
 
 }
 
@@ -197,16 +197,16 @@ isnt(syslog_lines('/debug', '[debug]'), 0, 'debug');
 
 get_syslog('/info');
 
-is(syslog_lines('/info', '[info]'), 1, 'info');
-is(syslog_lines('/notice', '[notice]'), 1, 'notice');
-is(syslog_lines('/warn', '[warn]'), 1, 'warn');
-is(syslog_lines('/error', '[error]'), 1, 'error');
+is(syslog_lines('/info', '"errorLevel": "info"'), 1, 'info');
+is(syslog_lines('/notice', '"errorLevel": "notice"'), 1, 'notice');
+is(syslog_lines('/warn', '"errorLevel": "warn"'), 1, 'warn');
+is(syslog_lines('/error', '"errorLevel": "error"'), 1, 'error');
 
 # count log messages emitted with various error_log levels
 
-is(syslog_lines('/low', '[error]'), 2, 'low');
-is(syslog_lines('/dup', '[error]'), 2, 'dup');
-is(syslog_lines('/high', '[error]'), 1, 'high');
+is(syslog_lines('/low', '"errorLevel": "error"'), 2, 'low');
+is(syslog_lines('/dup', '"errorLevel": "error"'), 2, 'dup');
+is(syslog_lines('/high', '"errorLevel": "error"'), 1, 'high');
 
 # check for the presence of the syslog messages in the global and http contexts
 
