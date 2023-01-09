@@ -26,6 +26,7 @@ my $t = Test::Nginx->new()->has(qw/http proxy cache gzip rewrite/)
 
 %%TEST_GLOBALS%%
 
+user root;
 daemon off;
 
 events {
